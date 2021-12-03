@@ -8,8 +8,10 @@ export default function App() {
   const handleClick = (e) => {
     console.log("Button Clicked!");
   };
+
   const title = "Hello World!";
   const description = "Start editing react to see some magic happen!";
+
   return (
     /* perbedaan nilai atribut yang bisa diterapkan
 
