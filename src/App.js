@@ -1,9 +1,10 @@
 import React from "react";
 
-function App() {
+function App(props) {
+  console.log(props);
   return (
     <>
-      <h1>Hello World!</h1>
+      <h1>{props.nama}</h1>
       <p>React is Awesome</p>
     </>
   );

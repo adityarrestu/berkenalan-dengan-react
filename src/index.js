@@ -30,7 +30,7 @@ import App from "./App.js";
 );
 */
 
-const element = <App />;
+const element = <App nama="React App" />;
 
 // mengambil root dalam HTML untuk menempatkan element dalam root
 const domElement = document.getElementById("root");
