@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function App(props) {
   console.log(props);
@@ -9,5 +10,9 @@ function App(props) {
     </>
   );
 }
+
+App.propTypes = {
+  nama: PropTypes.string.isRequired
+};
 
 export default App;

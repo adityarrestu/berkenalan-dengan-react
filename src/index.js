@@ -32,7 +32,7 @@ import App from "./App.js";
 
 const element = <App nama="React App" />;
 
-// mengambil root dalam HTML untuk menempatkan element dalam root
+// mengambil node dalam HTML untuk menempatkan element
 const domElement = document.getElementById("root");
 
 // menggunakan react DOM untuk menampilkan element pada browser
