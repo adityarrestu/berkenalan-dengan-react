@@ -25,7 +25,7 @@ export default function App() {
     <div className={className}>
       <h1 style={{ color: "red", textAlign: "right" }}>{title}</h1>
       <h2>{description}</h2>
-      <button onCiulck={handleClick}>Click Here!</button>
+      <button onClick={handleClick}>Click Here!</button>
     </div>
   );
 }
