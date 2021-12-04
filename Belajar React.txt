@@ -1,0 +1,176 @@
+React menggunakan JavaScript untuk membangun
+
+JSX memungkinkan penulisan kode markup (HTML) secara langsung pada JavaScript. Mendeklarasikan tampilan bersama logika kodenya.
+
+#Perbedaan:
+Atributnya diatur dengan aturan chamelCase atau bisa dipisah dengan tanda "-".
+Contoh: data-something="data"
+	dataSomething="data"
+
+Atribut class ditulis dengan className
+Nilai atribut bisa ditulis menggunakan ekspresi JavaScript 
+
+Inline style menggunakan objek JavaScript
+Contoh:
+<h1 style={{color: 'red', textAlign='right'}}>Text</h1>
+
+#React Element
+Mendefinisikan apa yang ingi ditampilkan pada browser. Buat menggunakan JSX.
+Contoh:
+const element = <h1>Hello</h1>
+
+Element yang dideklarasikan tidak akan langsung ditampilkan pada browser
+Untuk menampilkannya, gunakan reactDOM untuk merender element.
+Contoh:
+ReactDOM.render(element, domElement)
+
+Argument domElement dari akses tampilan browser pada 'root' dalam index.html.
+Untuk mendapatkannya:
+conts domElement = document.getElementById('root');
+
+Tipe Element:
+1. Tag name
+2. React Component
+3. React Fragment
+
+1. Tag name: menggunakan tagar seperti di HTML. Contoh: const element = <h1>Text</h1>
+
+2. React Component: membentuk komponen. Contoh: const element = <Komponen/>
+
+3. React Fragment: membentuk fragment yang dapat membungkus beberapa element.
+Contoh: const element = <React.Fragment>
+	  <h1>Hello</h1>
+	  <h2>World!</h2>
+	</React.Fragment>
+
+atau menggunakan shorthand seperti:
+const element = <>
+  <h1>Hello</h1>
+  <h2>World!</h2>
+</>
+
+#React Component
+Memecah tampilan aplikasi menggunakan potongan-potongan yang disebut Component
+
+Layaknya fungsi JS, React Component menerima input data dari parameter yang disebut 'props' dan memiliki return value berupa React Element.
+
+PropTypes digunakan untuk memvalidasi input pada props.
+Contoh:
+Komponen.propTypes = {
+  nama: PropTypes.string.isRequired
+}
+
+Setiap komponen memiliki props yang dinamakan props children. Ditempatkan di antara tag komponen.
+Contoh:
+<Header>{props.nama}</Header>
+
+#Sumber Data Komponen React
+1. Props
+2. State
+
+Props: data diberikan dari luar component, misalnya dari component lain (component induk) yang memanggil component tersebut.
+
+State: data yang berada dalam component dan dikelola oleh component itu sendiri.
+
+*useState hook: untuk menggunakan State
+Berupa array, contoh:
+const [nilaiBalikan, perbaruiNilai] = useState(0);
+
+const [count, setCount] = useState(0);
+*0 = nilai awal  
+
+Menampilkannya pada paragraf:
+<p>Counter: {count}</p>
+
+Mengubah nilai count dengan setCount:
+<button onClick={e=>setCount(count+1)}>Berhitung!</button>
+
+#Side Effects
+Jika sebuah fungsi component memerlukan komunikasi atau akses dengan dunia luar, misalnya menggunakan data dari REST API, berlangganan ke sebuah websocket, mengakses localStorage, memanipulasi DOM node secara manual, menjalankan timer dan sebagainya, maka semua aksi tersebut disebut side effects atau secara singkat sebut saja efek.
+
+React memiliki useEffect hook untuk menjalankan efek pada fungsi component.
+Efek tersebut akan dijalankan setelah komponen berhasil di-render pada browser (baik untuk pertama kali, maupun setiap ada perubahan atau update).
+
+Contoh mengambil data dari JSON placeholder:
+./posts/1
+
+useEffect(()=>{
+  const fetchPost = async ()=>{
+    const res = await fetch ('https://jsonplaceholder.typicode.com/posts/1'); //request data
+    const post = await res.json(); // mengambil data
+    console.log(post);
+  }
+
+  fetchPost(); 
+}, );
+
+*(jsonplaceholder.typicode.com)
+*() parameter berupa callback, dipanggil saat dirender dan update
+*menggunakan web APIs, Fetch API
+
+Untuk menampilkan data pada browser, bisa memasukkannya ke dalam State.
+Contoh:
+const [post, setPost] = useState([]);
+
+*nilai awal berupa array kosong
+
+Masukkan pada useEffect:
+useEffect(()=>{
+  const fetchPost = async ()=>{
+    const res = await fetch ('https://jsonplaceholder.typicode.com/posts/1'); 
+    const post = await res.json(); 
+    console.log(post);
+    setPost(post);
+  }
+
+  fetchPost(); 
+}, []) // tambahkan dependencies pada parameter ke-2 berupa array kosong untuk menjalankan useEffect 1 kali saja saat dirender. Jika tidak akan loop berkali-kali.
+
+Selain array kosong, bisa State atau props
+Contoh:
+const [postId, setPostId] = useState(1);
+
+useEffect( ....
+
+, [postId]);
+
+Menampilkan data pada browser:
+<h1>{post.title}</h1>
+<p>{post.body}</p>
+
+#Conditional Rendering
+Developer dapat melakukan conditional rendering di dalam sebuah coponent berdasarkan nilai dari state atau props dengan menggunakan if conditional, ternary operator dan && operator.
+
+Contoh:
+*pembuatan State
+const [isFetching, setIsFetching] = useState(false);
+
+setFetching(true);
+setFetching(false);
+
+*menampilkan conditional rendering ketika fetching
+// if conditional
+if (isFetching) {
+  return <h1>Loading...</h1>
+}
+
+// ternary operator
+{isFetching ? (
+  <h1>Loading...</h1>
+) : {
+  <>
+    <h2>{post.title}</h2>
+    <p>{post.body}</p>
+  </>
+)}
+
+// && conditional
+{isFetching && <h1>Loading...</h1>}
+{!isFetching && (
+  <>
+    <h2>{post.title}</h2>
+    <p>{post.body}</p>
+  </>
+)}
+
+
