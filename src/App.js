@@ -6,8 +6,11 @@ import Header from "./Header.js";
 function App(props) {
   console.log(props);
 
-  // menggunakan useState, count: nillai, setCount: fungsi pengubah
+  // menggunakan useState, count: nilai, setCount: fungsi pengubah
   const [count, setCount] = useState(0);
+
+  // mendapatkan data untuk digunakan State
+  const [post, setPost] = useState(1);
 
   // menggunakan useEffect untuk mengakses data dari json placeholder
   useEffect(() => {
@@ -15,18 +18,21 @@ function App(props) {
       const res = await fetch("https://jsonplaceholder.typicode.com/posts/1"); //request menggunakan fetch API
       const post = await res.json(); // mengambil data
       console.log(post); // menampilkan pada console
+      setPost(post); // mengambil post ke useState
     };
 
     fetchPost(); // memanggil perintah fetchPost
-  });
+  }, []); // menambahkan dependencies, berupa array, State atau props
 
-  // menampilkan nilai useState dan mengubahnya dengan setCount
+  // menampilkan nilai useState
   return (
     <>
       <Header>{props.nama}</Header>
       <p>React is Awesome</p>
       <p>Counter: {count}</p>
       <button onClick={(e) => setCount(count + 1)}>Berhitung!</button>
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
     </>
   );
 }
